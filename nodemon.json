@@ -1,0 +1,23 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules",
+    "desktop.bundles/*/*.min.js",
+    "desktop.bundles/*/*.bemdecl.js",
+    "desktop.bundles/*/*.deps.js",
+    "desktop.bundles/*/*.browser*"
+  ],
+  "verbose": true,
+  "execMap": {
+    "js": "node"
+  },
+  "watch": [
+    "desktop.bundles",
+    "server"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js"
+}

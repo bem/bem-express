@@ -1,0 +1,15 @@
+{
+  "name": "bem-express",
+  "version": "1.0.0",
+  "description": "Stub project for BEM platform with express.js",
+  "bugs": "https://github.com/tadatuta/bem-express/issuss",
+  "ignore": [
+    ".enb/tmp",
+    "node_modules",
+    "libs"
+  ],
+  "dependencies": {
+    "bem-components": "~2.3.0",
+    "bem-history": "~3.1.0"
+  }
+}
