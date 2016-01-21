@@ -1,3 +1,5 @@
+Object.assign || (Object.assign = require('object-assign'));
+
 var fs = require('fs'),
     path = require('path'),
     express = require('express'),
