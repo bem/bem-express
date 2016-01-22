@@ -4,7 +4,6 @@ var techs = {
         borschik: require('enb-borschik/techs/borschik'),
         stylus: require('enb-stylus/techs/stylus'),
         browserJs: require('enb-js/techs/browser-js'),
-        nodeJs: require('enb-js/techs/node-js'),
         bemtree: require('enb-bemxjst/techs/bemtree'),
         bemhtml: require('enb-bemxjst/techs/bemhtml')
     },
@@ -35,16 +34,17 @@ module.exports = function(config) {
             // css
             [techs.stylus, {
                 target: '?.css',
+                sourcemap: false,
                 autoprefixer: {
                     browsers: ['ie >= 10', 'last 2 versions', 'opera 12.1', '> 2%']
                 }
             }],
 
             // bemtree
-            [techs.bemtree, { sourceSuffixes: ['bemtree.js', 'bemtree'] }],
+            [techs.bemtree, { sourceSuffixes: ['bemtree', 'bemtree.js'] }],
 
             // templates
-            [techs.bemhtml, { sourceSuffixes: ['bemhtml.js', 'bemhtml'] }],
+            [techs.bemhtml, { sourceSuffixes: ['bemhtml', 'bemhtml.js'] }],
 
             // client templates
             [enbBemTechs.depsByTechToBemdecl, {
@@ -62,13 +62,10 @@ module.exports = function(config) {
                 dirsTarget: '?.tmpl.dirs'
             }],
             [techs.bemhtml, {
-                target : '?.browser.bemhtml.js',
-                filesTarget : '?.tmpl.files',
-                sourceSuffixes: ['bemhtml.js', 'bemhtml']
+                target: '?.browser.bemhtml.js',
+                filesTarget: '?.tmpl.files',
+                sourceSuffixes: ['bemhtml', 'bemhtml.js']
             }],
-
-            // node.js
-            [techs.nodeJs, { includeYM: true }],
 
             // js
             [techs.browserJs, { includeYM: true }],
@@ -78,10 +75,10 @@ module.exports = function(config) {
             }],
 
             // borschik
-            [techs.borschik, { sourceTarget: '?.js', destTarget: '?.min.js', minify: isProd }],
-            [techs.borschik, { sourceTarget: '?.css', destTarget: '?.min.css', tech: 'cleancss', minify: isProd }]
+            [techs.borschik, { source: '?.js', target: '?.min.js', minify: isProd }],
+            [techs.borschik, { source: '?.css', target: '?.min.css', tech: 'cleancss', minify: isProd }]
         ]);
 
-        nodeConfig.addTargets(['?.bemtree.js', '?.bemhtml.js', '?.node.js', '?.min.css', '?.min.js']);
+        nodeConfig.addTargets(['?.bemtree.js', '?.bemhtml.js', '?.min.css', '?.min.js']);
     });
 };
