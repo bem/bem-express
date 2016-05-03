@@ -76,7 +76,7 @@ module.exports = function(config) {
 
             // borschik
             [techs.borschik, { source: '?.js', target: '?.min.js', minify: isProd }],
-            [techs.borschik, { source: '?.css', target: '?.min.css', tech: 'cleancss', minify: isProd }]
+            [techs.borschik, { source: '?.css', target: '?.min.css', minify: isProd }]
         ]);
 
         nodeConfig.addTargets(['?.bemtree.js', '?.bemhtml.js', '?.min.css', '?.min.js']);
