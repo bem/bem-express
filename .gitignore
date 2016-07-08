@@ -5,6 +5,8 @@ node_modules/
 .svn
 npm-debug.log
 
+static/index.min.*
+
 # bem
 .enb/tmp/
 libs/
