@@ -37,6 +37,7 @@
     "enb-borschik": "^2.4.0",
     "enb-js": "^1.1.0",
     "enb-stylus": "^2.3.2",
+    "node-notifier": "^4.6.1",
     "nodemon": "^1.9.2",
     "ym": "^0.1.2"
   },
@@ -45,7 +46,7 @@
     "postinstall": "npm run deps",
     "deps": "bower i",
     "make": "enb make",
-    "watch": "chokidar '*.blocks/**' -c 'npm run make'"
+    "watch": "chokidar '*.blocks/**' --initial -c 'enb make && notify -t bem-express -m Built'"
   },
   "private": true
 }
