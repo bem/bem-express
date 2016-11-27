@@ -1,11 +1,13 @@
-var path = require('path'),
+var fs = require('fs'),
+    path = require('path'),
+    nodeEval = require('node-eval'),
     config = require('./config'),
+
     bundleName = 'index',
     pathToBundle = path.resolve('desktop.bundles', bundleName),
-    BEMTREE = require(path.join(pathToBundle, bundleName + '.bemtree.js')).BEMTREE,
-    BEMHTML = require(path.join(pathToBundle, bundleName + '.bemhtml.js')).BEMHTML,
 
     isDev = process.env.NODE_ENV === 'development',
+    templates = getTemplates(),
     useCache = !isDev,
     cacheTTL = config.cacheTTL,
     cache = {};
@@ -32,8 +34,10 @@ function render(req, res, data, context) {
         }, data)
     };
 
+    if (isDev) templates = getTemplates();
+
     try {
-        var bemjson = BEMTREE.apply(bemtreeCtx);
+        var bemjson = templates.BEMTREE.apply(bemtreeCtx);
     } catch(err) {
         console.error('BEMTREE error', err.stack);
         console.trace('server stack');
@@ -43,7 +47,7 @@ function render(req, res, data, context) {
     if (isDev && query.bemjson) return res.send('<pre>' + JSON.stringify(bemjson, null, 4) + '</pre>');
 
     try {
-        var html = BEMHTML.apply(bemjson);
+        var html = templates.BEMHTML.apply(bemjson);
     } catch(err) {
         console.error('BEMHTML error', err.stack);
         return res.sendStatus(500);
@@ -59,6 +63,17 @@ function render(req, res, data, context) {
 
 function dropCache() {
     cache = {};
+}
+
+function evalFile(filename) {
+    return nodeEval(fs.readFileSync(filename, 'utf8'), filename);
+}
+
+function getTemplates() {
+    return {
+        BEMTREE: evalFile(path.join(pathToBundle, bundleName + '.bemtree.js')).BEMTREE,
+        BEMHTML: evalFile(path.join(pathToBundle, bundleName + '.bemhtml.js')).BEMHTML
+    };
 }
 
 module.exports = {
