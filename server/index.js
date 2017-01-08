@@ -43,8 +43,9 @@ app
     }))
     .use(passport.initialize())
     .use(passport.session())
-    .use(csrf())
-    .use(slashes());
+    .use(csrf());
+
+isDev || app.use(slashes());
 
 passport.serializeUser(function(user, done) {
     done(null, JSON.stringify(user));
@@ -71,6 +72,9 @@ app.get('/', function(req, res) {
         }
     })
 });
+
+// NOTE: conflicts with livereload
+isDev && require('./rebuild')(app);
 
 app.get('*', function(req, res) {
     res.status(404);

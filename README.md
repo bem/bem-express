@@ -5,6 +5,8 @@ Almost the same as [project-stub](https://github.com/bem/project-stub/) but with
 ## Installation
 
 ```sh
+git clone https://github.com/bem/bem-express.git
+cd bem-express
 npm i
 enb make
 ```
@@ -12,15 +14,25 @@ enb make
 ## Development
 
 ```sh
-npm run watch
-nodemon
+npm run dev
+```
+will run initial `enb make` command and then start the server with `nodemon` which will restart it on any server file update. Also `chokidar` will watch for changes in `*.blocks/**` and rebuild the project automatically. Then livereload will update the page in the browser.
+
+You may also set `NO_LIVERELOAD` env variable to switch livereload off:
+```sh
+NO_LIVERELOAD=1 npm run dev
+```
+
+You may also run rebuild manually with `enb make` or with external watcher (e.g. `npm run watch`). To switch off automatic rebuild use `NO_AUTOMAKE` env variable:
+```sh
+NO_AUTOMAKE=1 npm run dev
 ```
 
 ## Production
 
 ```sh
 YENV=production enb make
-node server
+NODE_ENV=production node server
 ```
 
 ## Templating
