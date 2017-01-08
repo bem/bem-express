@@ -9,6 +9,12 @@
   "engines": {
     "node": ">=0.12"
   },
+  "browserslist": [
+    "ie >= 10",
+    "opera 12.1",
+    "> 2%",
+    "last 2 versions"
+  ],
   "dependencies": {
     "body-parser": "^1.15.0",
     "compression": "^1.6.2",
@@ -38,9 +44,17 @@
     "enb-bemxjst": "^7.5.0",
     "enb-borschik": "^2.4.0",
     "enb-js": "^1.1.0",
-    "enb-stylus": "^2.3.2",
+    "enb-postcss": "^1.2.0",
     "node-notifier": "^4.6.1",
     "nodemon": "^1.9.2",
+    "postcss-calc": "^5.3.1",
+    "postcss-each": "^0.9.3",
+    "postcss-for": "^2.1.1",
+    "postcss-import": "^9.0.0",
+    "postcss-nested": "^1.0.0",
+    "postcss-reporter": "^3.0.0",
+    "postcss-simple-vars": "^3.0.0",
+    "rebem-css": "^0.2.0",
     "tiny-lr": "^1.0.3",
     "ym": "^0.1.2"
   },
