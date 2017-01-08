@@ -9,7 +9,6 @@ static/index.min.*
 
 # bem
 .enb/tmp/
-libs/
 *bundles*/*/*.*
 !*bundles*/*/*.bemdecl.js
 *bundles*/*/*.tmpl.bemdecl.js

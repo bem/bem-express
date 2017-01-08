@@ -1,7 +1,7 @@
 {
     "freeze_paths" : {
-        "libs/**": ":base64:",
-        "libs/**/*.svg": ":encodeURIComponent:",
+        "node_modules/**": ":base64:",
+        "node_modules/**/*.svg": ":encodeURIComponent:",
         "*.blocks/**": ":base64:",
         "*.blocks/**/*.svg": ":encodeURIComponent:"
     }

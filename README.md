@@ -8,7 +8,6 @@ Almost the same as [project-stub](https://github.com/bem/project-stub/) but with
 git clone https://github.com/bem/bem-express.git
 cd bem-express
 npm i
-enb make
 ```
 
 ## Development
