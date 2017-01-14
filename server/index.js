@@ -27,6 +27,8 @@ var fs = require('fs'),
     isSocket = isNaN(port),
     isDev = process.env.NODE_ENV === 'development';
 
+require('debug-http')();
+
 app
     .disable('x-powered-by')
     .enable('trust proxy')
