@@ -47,6 +47,7 @@ app
     .use(passport.session())
     .use(csrf());
 
+// NOTE: conflicts with livereload
 isDev || app.use(slashes());
 
 passport.serializeUser(function(user, done) {
@@ -75,7 +76,6 @@ app.get('/', function(req, res) {
     })
 });
 
-// NOTE: conflicts with livereload
 isDev && require('./rebuild')(app);
 
 app.get('*', function(req, res) {
