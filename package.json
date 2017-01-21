@@ -76,7 +76,7 @@
     "make": "enb make",
     "dev": "npm run make && nodemon",
     "watch": "chokidar '*.blocks/**' --initial -c 'enb make && notify -t bem-express -m Built'",
-    "test": "npm run lint",
+    "test": "npm run lint && npm run make",
     "lint": "eslint . && bemhint . && stylelint *.blocks/**/*.css"
   },
   "private": true
