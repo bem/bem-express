@@ -12,7 +12,7 @@ var fs = require('fs'),
     expressSession = require('express-session'),
     slashes = require('connect-slashes'),
     passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
+    // LocalStrategy = require('passport-local').Strategy,
     csrf = require('csurf'),
     compression = require('compression'),
 
@@ -21,7 +21,7 @@ var fs = require('fs'),
 
     Render = require('./render'),
     render = Render.render,
-    dropCache = Render.dropCache,
+    dropCache = Render.dropCache, // eslint-disable-line no-unused-vars
 
     port = process.env.PORT || config.defaultPort,
     isSocket = isNaN(port),

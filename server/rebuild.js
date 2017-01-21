@@ -50,5 +50,5 @@ module.exports = function(app) {
 
     // livereload middleware
     // serves the script injected by development.blocks/livereload template
-    app.use(tinyLr.middleware({ app, dashboard: true }));
+    app.use(tinyLr.middleware({ app: app, dashboard: true }));
 };
