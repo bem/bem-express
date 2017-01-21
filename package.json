@@ -39,6 +39,10 @@
     "autoprefixer": "^6.6.1",
     "bem-components": "^5.0.0",
     "bem-core": "^4.1.1",
+    "bemhint": "^0.7.0",
+    "bemhint-css-naming": "^1.0.1",
+    "bemhint-deps-specification": "^1.0.0",
+    "bemhint-fs-naming": "^1.0.0",
     "chokidar": "^1.6.1",
     "chokidar-cli": "^1.2.0",
     "enb": "^1.3.0",
@@ -71,7 +75,7 @@
     "dev": "npm run make && nodemon",
     "watch": "chokidar '*.blocks/**' --initial -c 'enb make && notify -t bem-express -m Built'",
     "test": "npm run lint",
-    "lint": "eslint ."
+    "lint": "eslint . && bemhint ."
   },
   "private": true
 }
