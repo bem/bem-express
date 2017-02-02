@@ -5,6 +5,7 @@ var fs = require('fs'),
 
     bundleName = 'index',
     pathToBundle = path.resolve('desktop.bundles', bundleName),
+    langs = config.langs,
 
     isDev = process.env.NODE_ENV === 'development',
     templates = getTemplates(),
@@ -15,7 +16,8 @@ var fs = require('fs'),
 function render(req, res, data, context) {
     var query = req.query,
         user = req.user,
-        cacheKey = req.originalUrl + (context ? JSON.stringify(context) : '') + (user ? JSON.stringify(user) : ''),
+        currentLang = data.lang || langs[0],
+        cacheKey = req.originalUrl + currentLang + (context ? JSON.stringify(context) : '') + (user ? JSON.stringify(user) : ''),
         cached = cache[cacheKey];
 
     if (useCache && cached && (new Date() - cached.timestamp < cacheTTL)) {
@@ -37,7 +39,7 @@ function render(req, res, data, context) {
     if (isDev) templates = getTemplates();
 
     try {
-        var bemjson = templates.BEMTREE.apply(bemtreeCtx);
+        var bemjson = templates[currentLang].BEMTREE.apply(bemtreeCtx);
     } catch(err) {
         console.error('BEMTREE error', err.stack);
         console.trace('server stack');
@@ -47,7 +49,7 @@ function render(req, res, data, context) {
     if (isDev && query.bemjson) return res.send('<pre>' + JSON.stringify(bemjson, null, 4) + '</pre>');
 
     try {
-        var html = templates.BEMHTML.apply(bemjson);
+        var html = templates[currentLang].BEMHTML.apply(bemjson);
     } catch(err) {
         console.error('BEMHTML error', err.stack);
         return res.sendStatus(500);
@@ -70,10 +72,13 @@ function evalFile(filename) {
 }
 
 function getTemplates() {
-    return {
-        BEMTREE: evalFile(path.join(pathToBundle, bundleName + '.bemtree.js')).BEMTREE,
-        BEMHTML: evalFile(path.join(pathToBundle, bundleName + '.bemhtml.js')).BEMHTML
-    };
+    return langs.reduce(function(tmpls, lang) {
+        tmpls[lang] = {
+            BEMTREE: evalFile(path.join(pathToBundle, bundleName + '.' + lang + '.bemtree.js')).BEMTREE,
+            BEMHTML: evalFile(path.join(pathToBundle, bundleName + '.bemhtml.js')).BEMHTML
+        }
+        return tmpls;
+    }, {});
 }
 
 module.exports = {

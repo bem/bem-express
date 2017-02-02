@@ -16,8 +16,11 @@ var techs = {
             require('autoprefixer')()
         ],
         browserJs: require('enb-js/techs/browser-js'),
-        bemtree: require('enb-bemxjst/techs/bemtree'),
-        bemhtml: require('enb-bemxjst/techs/bemhtml')
+        prependYm: require('enb-modules/techs/prepend-modules'),
+        bemtreeI18N: require('enb-bemxjst-i18n/techs/bemtree-i18n'),
+        bemhtml: require('enb-bemxjst/techs/bemhtml'),
+        keysets: require('enb-bem-i18n/techs/keysets'),
+        i18n: require('enb-bem-i18n/techs/i18n')
     },
     enbBemTechs = require('enb-bem-techs'),
     levels = [
@@ -33,7 +36,11 @@ var techs = {
 var isProd = process.env.YENV === 'production';
 isProd || levels.push('development.blocks');
 
+var langs = require('../server/config').langs;
+
 module.exports = function(config) {
+    config.setLanguages(langs);
+
     config.nodes('*.bundles/*', function(nodeConfig) {
         nodeConfig.addTechs([
             // essential
@@ -49,8 +56,19 @@ module.exports = function(config) {
                 plugins: techs.postcssPlugins
             }],
 
+            // i18n
+            [techs.keysets, { lang: '{lang}' }],
+            [techs.i18n, {
+                exports: { ym: true, commonJS: true },
+                lang: '{lang}'
+            }],
+
             // bemtree
-            [techs.bemtree, { sourceSuffixes: ['bemtree', 'bemtree.js'] }],
+            [techs.bemtreeI18N, {
+                sourceSuffixes: ['bemtree', 'bemtree.js'],
+                target: '?.{lang}.bemtree.js',
+                lang: '{lang}'
+            }],
 
             // templates
             [techs.bemhtml, {
@@ -82,20 +100,25 @@ module.exports = function(config) {
             }],
 
             // js
-            [techs.browserJs, { includeYM: true }],
+            [techs.browserJs],
             [techs.fileMerge, {
-                target: '?.js',
-                sources: ['?.browser.js', '?.browser.bemhtml.js']
+                target: '?.pre.{lang}.js',
+                sources: ['?.lang.{lang}.js', '?.browser.bemhtml.js', '?.browser.js'],
+                lang: '{lang}'
+            }],
+            [techs.prependYm, {
+                source: '?.pre.{lang}.js',
+                target: '?.{lang}.js'
             }],
 
             // borschik
-            [techs.borschik, { source: '?.js', target: '?.min.js', minify: isProd }],
+            [techs.borschik, { source: '?.{lang}.js', target: '?.{lang}.min.js', minify: isProd }],
             [techs.borschik, { source: '?.css', target: '?.min.css', minify: isProd }],
 
-            [techs.fileCopy, { source: '?.min.js', target: '../../static/?.min.js' }],
+            [techs.fileCopy, { source: '?.{lang}.min.js', target: '../../static/?.{lang}.min.js' }],
             [techs.fileCopy, { source: '?.min.css', target: '../../static/?.min.css' }]
         ]);
 
-        nodeConfig.addTargets(['?.bemtree.js', '?.bemhtml.js', '../../static/?.min.js', '../../static/?.min.css']);
+        nodeConfig.addTargets(['?.{lang}.bemtree.js', '?.bemhtml.js', '../../static/?.{lang}.min.js', '../../static/?.min.css']);
     });
 };

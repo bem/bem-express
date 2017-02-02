@@ -65,14 +65,15 @@ app.get('/ping/', function(req, res) {
 app.get('/', function(req, res) {
     render(req, res, {
         view: 'page-index',
-        title: 'Main page',
+        title: 'page-index',
         meta: {
             description: 'Page description',
             og: {
                 url: 'https://site.com',
                 siteName: 'Site name'
             }
-        }
+        },
+        lang: config.langs[0]
     })
 });
 

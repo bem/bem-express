@@ -8,7 +8,7 @@ block('root').replace()(function() {
 
     return {
         block: 'page',
-        title: data.title,
+        title: this.i18n('root', data.title),
         favicon: '/favicon.ico',
         styles: [
             {
@@ -19,7 +19,7 @@ block('root').replace()(function() {
         scripts: [
             {
                 elem: 'js',
-                url: '/index.min.js'
+                url: '/index.' + data.lang + '.min.js'
             }
         ],
         head: [
