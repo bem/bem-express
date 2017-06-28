@@ -13,7 +13,7 @@ block('root').replace()(function() {
         styles: [
             {
                 elem: 'css',
-                url: '/index.min.css'
+                content: data.styles
             }
         ],
         scripts: [

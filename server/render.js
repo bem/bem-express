@@ -8,6 +8,7 @@ var fs = require('fs'),
 
     isDev = process.env.NODE_ENV === 'development',
     templates = getTemplates(),
+    styles = getStyles(),
     useCache = !isDev,
     cacheTTL = config.cacheTTL,
     cache = {};
@@ -24,17 +25,21 @@ function render(req, res, data, context) {
 
     if (isDev && query.json) return res.send('<pre>' + JSON.stringify(data, null, 4) + '</pre>');
 
+    if (isDev) {
+        templates = getTemplates();
+        styles = getStyles();
+    }
+
     var bemtreeCtx = {
         block: 'root',
         context: context,
         // extend with data needed for all routes
         data: Object.assign({}, {
             url: req._parsedUrl,
-            csrf: req.csrfToken()
+            csrf: req.csrfToken(),
+            styles: styles
         }, data)
     };
-
-    if (isDev) templates = getTemplates();
 
     try {
         var bemjson = templates.BEMTREE.apply(bemtreeCtx);
@@ -74,6 +79,10 @@ function getTemplates() {
         BEMTREE: evalFile(path.join(pathToBundle, bundleName + '.bemtree.js')).BEMTREE,
         BEMHTML: evalFile(path.join(pathToBundle, bundleName + '.bemhtml.js')).BEMHTML
     };
+}
+
+function getStyles() {
+    return fs.readFileSync(path.join(pathToBundle, bundleName + '.min.css'), 'utf8');
 }
 
 module.exports = {
