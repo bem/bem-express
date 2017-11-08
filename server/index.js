@@ -72,7 +72,8 @@ app.get('/', function(req, res) {
                 url: 'https://site.com',
                 siteName: 'Site name'
             }
-        }
+        },
+        items: [1,2,3,4,5]
     })
 });
 

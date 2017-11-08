@@ -1,0 +1,12 @@
+.page-index
+{
+    position: relative;
+    width: 100%;
+    margin: 200px 0;
+}
+.page-index:after
+{
+    content: '';
+    display: block;
+    clear: both;
+}

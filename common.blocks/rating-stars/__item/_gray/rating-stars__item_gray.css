@@ -1,0 +1,12 @@
+.rating-stars__item_gray
+{
+    /* rating-stars__item_gray.svg */
+    background: url(rating-stars__item_gray.svg);
+    background-repeat: no-repeat;
+}
+
+.rating-stars__item_gray,
+.rating-stars__item_gray:before
+{
+    background-size: cover;
+}

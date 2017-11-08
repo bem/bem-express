@@ -1,0 +1,5 @@
+({
+    shouldDeps: [
+        { elems: ['gray', 'yellow'] }
+    ]
+})
