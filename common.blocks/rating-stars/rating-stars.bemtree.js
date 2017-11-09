@@ -5,7 +5,15 @@ block('rating-stars').content()(function() {
         },
         {
             elem: 'yellow'
+        },
+        {
+            block: 'modal',
+            mods: { autoclosable : true, theme : 'islands' },
+            content: [
+                {
+                    block: 'feedback'
+                }
+            ]
         }
-
     ];
 });

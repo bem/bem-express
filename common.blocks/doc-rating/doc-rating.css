@@ -1,0 +1,16 @@
+.doc-rating
+{
+    line-height: 1.33;
+
+    height: 20px;
+}
+
+.doc-rating:before
+{
+    display: inline-block;
+
+    height: 100%;
+
+    content: '';
+    vertical-align: middle;
+}

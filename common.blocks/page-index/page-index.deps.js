@@ -1,6 +1,6 @@
 ({
     shouldDeps: [
-        'rating-stars',
+        'doc-rating',
         { elems: ['left', 'right'] }
     ]
 })

@@ -1,0 +1,8 @@
+.rating-stars__gray
+{
+    z-index: 0;
+
+    display: block;
+
+    padding: 0;
+}

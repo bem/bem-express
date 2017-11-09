@@ -1,5 +1,10 @@
 ({
     shouldDeps: [
-        { elems: ['gray', 'yellow'] }
+        { elems: ['gray', 'yellow'] },
+        {
+            block : 'modal',
+            mods : { autoclosable : true, theme : 'islands' }
+        },
+        'feedback'
     ]
 })

@@ -1,0 +1,3 @@
+block('icon')(
+    tag()('i')
+);

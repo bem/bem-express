@@ -1,0 +1,8 @@
+.icon_has-glyph_yes {
+    position: relative;
+}
+
+.icon_has-glyph_yes svg,
+.icon_has-glyph_yes svg * {
+    fill: currentColor;
+}

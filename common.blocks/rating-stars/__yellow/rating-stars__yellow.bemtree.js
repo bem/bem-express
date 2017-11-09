@@ -1,4 +1,4 @@
-block('rating-stars').elem('gray').content()(function() {
+block('rating-stars').elem('yellow').content()(function() {
    var  ctx = this.ctx,
         data = this.data = ctx.data;
         // items = data.items;

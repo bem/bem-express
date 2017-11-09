@@ -1,0 +1,17 @@
+.rating-stars__yellow
+{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+
+    display: block;
+    overflow: hidden;
+
+    width: 51%;
+    padding: 0;
+
+    white-space: nowrap;
+
+    color: #f9b708;
+}
