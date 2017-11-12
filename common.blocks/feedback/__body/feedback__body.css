@@ -1,6 +1,6 @@
 .feedback__body
 {
-    padding: 0 16px;
+    padding: 0 16px 30px;
 }
 .feedback__textarea
 {
@@ -9,15 +9,4 @@
 .feedback__radio-group
 {
     padding-bottom: 30px;
-}
-.feedback__legal
-{
-    font-size: 12px;
-    font-weight: 400;
-    font-stretch: normal;
-    line-height: 1.4;
-
-    padding: 16px 0;
-
-    letter-spacing: .05px;
 }

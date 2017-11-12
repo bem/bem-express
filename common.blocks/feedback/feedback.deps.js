@@ -1,5 +1,5 @@
 ({
     shouldDeps: [
-        { elems: ['header', 'body', 'footer', 'cancel', 'legal', 'textarea'] }
+        { elems: ['header', 'body', 'footer', 'cancel', 'textarea'] }
     ]
 })
