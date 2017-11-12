@@ -1,0 +1,15 @@
+.feedback__footer
+{
+    box-sizing: border-box;
+    padding: 16px;
+
+    text-align: right;
+
+    border-top: 1px solid #c5c5c5;
+}
+.feedback__footer .feedback__cancel
+{
+    margin-right: 12px;
+
+    color: #c5c5c5;
+}

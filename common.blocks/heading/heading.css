@@ -1,0 +1,45 @@
+.heading
+{
+    line-height: 1;
+
+    margin: 0;
+    padding: 0;
+
+    letter-spacing: -.01em;
+}
+
+.heading_level_1
+{
+    font-size: 4px;
+    font-weight: 600;
+}
+
+.heading_level_2
+{
+    font-size: 50px;
+    font-weight: 400;
+}
+
+.heading_level_3
+{
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.heading_level_4
+{
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.heading_level_5
+{
+    font-size: 16px;
+    font-weight: 200;
+}
+
+.heading_level_6
+{
+    font-size: 16px;
+    font-weight: 200;
+}

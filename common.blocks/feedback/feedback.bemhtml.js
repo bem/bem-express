@@ -1,6 +1,4 @@
-block('feedback').content()(function() {
-    return {
-        elem: 'content',
-        content: applyNext()
-    };
-});
+block('feedback')(
+    tag()('form'),
+    js()(true)
+);
