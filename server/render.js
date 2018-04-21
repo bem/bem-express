@@ -21,7 +21,8 @@ let cache = Object.create(null);
 function render(req, res, data, context) {
     const query = req.query;
     const user = req.user;
-    const cacheKey = req.originalUrl + (context ? JSON.stringify(context) : '') + (user ? JSON.stringify(user) : '');
+    const platform = req.useragent.isMobile ? 'touch' : 'desktop';
+    const cacheKey = req.originalUrl + platform + (context ? JSON.stringify(context) : '') + (user ? JSON.stringify(user) : '');
     const cached = cache[cacheKey];
 
     if (useCache && cached && (new Date() - cached.timestamp < cacheTTL)) {
@@ -30,18 +31,18 @@ function render(req, res, data, context) {
 
     if (isDev && query.json) return res.send('<pre>' + JSON.stringify(data, null, 4) + '</pre>');
 
+    if (isDev) templates[platform] = getTemplatesForPlatform(platform);
+
     const bemtreeCtx = {
         block: 'root',
         context: context,
         // extend with data needed for all routes
         data: Object.assign({}, {
             url: req._parsedUrl,
-            csrf: req.csrfToken()
+            csrf: req.csrfToken(),
+            platform
         }, data)
     };
-
-    const platform = req.useragent.isMobile ? 'touch' : 'desktop';
-    if (isDev) templates[platform] = getTemplatesForPlatform(platform);
 
     let bemjson;
 

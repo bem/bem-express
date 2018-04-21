@@ -13,13 +13,13 @@ block('root')({
             styles: [
                 {
                     elem: 'css',
-                    url: '/index.min.css'
+                    url: '/index.' + data.platform +  '.min.css'
                 }
             ],
             scripts: [
                 {
                     elem: 'js',
-                    url: '/index.min.js'
+                    url: '/index.' + data.platform +  '.min.js'
                 }
             ],
             head: [
