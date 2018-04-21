@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const morgan = require('morgan');
 const serveStatic = require('serve-static');
+const userAgent = require('express-useragent');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const slashes = require('connect-slashes');
@@ -34,6 +35,7 @@ app
     .use(favicon(path.join(staticFolder, 'favicon.ico')))
     .use(serveStatic(staticFolder))
     .use(morgan('combined'))
+    .use(userAgent.express())
     .use(cookieParser())
     .use(bodyParser.urlencoded({ extended: true }))
     .use(expressSession({

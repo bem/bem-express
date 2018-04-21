@@ -3,13 +3,19 @@ const path = require('path');
 const nodeEval = require('node-eval');
 const config = require('./config');
 
-const bundleName = 'index';
-const pathToBundle = path.resolve(__dirname, '..', 'desktop.bundles', bundleName);
+const bemConfig = require('@bem/sdk.config')();
+const sets = Object.keys(bemConfig.getSync().sets)
+    .filter(platform => fs.existsSync(platform + '.bundles'));
 
+const bundleName = 'index';
 const isDev = process.env.NODE_ENV === 'development';
 const useCache = !isDev;
 const cacheTTL = config.cacheTTL;
-let templates = getTemplates();
+let templates = sets.reduce((acc, platform) => {
+    acc[platform] = getTemplatesForPlatform(platform);
+
+    return acc;
+}, {});
 let cache = Object.create(null);
 
 function render(req, res, data, context) {
@@ -34,12 +40,13 @@ function render(req, res, data, context) {
         }, data)
     };
 
-    if (isDev) templates = getTemplates();
+    const platform = req.useragent.isMobile ? 'touch' : 'desktop';
+    if (isDev) templates[platform] = getTemplatesForPlatform(platform);
 
     let bemjson;
 
     try {
-        bemjson = templates.BEMTREE.apply(bemtreeCtx);
+        bemjson = templates[platform].BEMTREE.apply(bemtreeCtx);
     } catch(err) {
         console.error('BEMTREE error', err.stack);
         console.trace('server stack');
@@ -51,7 +58,7 @@ function render(req, res, data, context) {
     let html;
 
     try {
-        html = templates.BEMHTML.apply(bemjson);
+        html = templates[platform].BEMHTML.apply(bemjson);
     } catch(err) {
         console.error('BEMHTML error', err.stack);
         return res.sendStatus(500);
@@ -73,7 +80,9 @@ function evalFile(filename) {
     return nodeEval(fs.readFileSync(filename, 'utf8'), filename);
 }
 
-function getTemplates() {
+function getTemplatesForPlatform(platform) {
+    const pathToBundle = path.resolve(__dirname, '..', platform + '.bundles', bundleName);
+
     return {
         BEMTREE: evalFile(path.join(pathToBundle, bundleName + '.bemtree.js')).BEMTREE,
         BEMHTML: evalFile(path.join(pathToBundle, bundleName + '.bemhtml.js')).BEMHTML

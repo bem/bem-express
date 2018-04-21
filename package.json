@@ -26,6 +26,7 @@
     "errorhandler": "^1.4.3",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "express-useragent": "^1.0.12",
     "lodash": "^4.11.2",
     "morgan": "^1.7.0",
     "node-eval": "^2.0.0",
