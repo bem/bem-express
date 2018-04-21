@@ -1,3 +1,5 @@
+const fs = require('fs');
+const bemConfig = require('@bem/sdk.config')();
 const techs = {
     fileProvider: require('enb/techs/file-provider'),
     fileMerge: require('enb/techs/file-merge'),
@@ -20,24 +22,25 @@ const techs = {
     bemhtml: require('enb-bemxjst/techs/bemhtml')
 };
 const enbBemTechs = require('enb-bem-techs');
-const levels = [
-    { path: 'node_modules/bem-core/common.blocks', check: false },
-    { path: 'node_modules/bem-core/desktop.blocks', check: false },
-    { path: 'node_modules/bem-components/common.blocks', check: false },
-    { path: 'node_modules/bem-components/desktop.blocks', check: false },
-    { path: 'node_modules/bem-components/design/common.blocks', check: false },
-    { path: 'node_modules/bem-components/design/desktop.blocks', check: false },
-    'common.blocks'
-];
-
 const isProd = process.env.YENV === 'production';
-isProd || levels.push('development.blocks');
+
+function getLevelsByPlatform(platform) {
+    const levels = bemConfig.levelsSync(platform)
+        .filter(level => fs.existsSync(level.path))
+        .map(level => ({ check: false }, level));
+
+    isProd || levels.push('development.blocks');
+
+    return levels;
+}
 
 module.exports = function(config) {
     config.nodes('*.bundles/*', function(nodeConfig) {
+        const platform = nodeConfig.getPath().split('.')[0];
+
         nodeConfig.addTechs([
             // essential
-            [enbBemTechs.levels, { levels: levels }],
+            [enbBemTechs.levels, { levels: getLevelsByPlatform(platform) }],
             [techs.fileProvider, { target: '?.bemdecl.js' }],
             [enbBemTechs.deps],
             [enbBemTechs.files],
